@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Models\Post;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,27 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', [PostController::class, 'index']);
-Route::get('posts/{post:slug}', [PostController::class, 'show']);
+Route::get('/', function(){
+	return view('posts.index',[
+		'posts' => Post::latest('published_at')->with('category','author')->get(),
+	]);
+});
+
+Route::get('post/{post:slug}', function (Post $post){
+	return view ('posts.show',[
+		'post' => $post
+	]);
+	});
+
+
+Route::get('author/{author:username}', function(User $author){
+	return view ('posts.author',[
+		'author' => $author,
+		'posts' => $author->posts
+
+	]);
+
+
+
+});
 
