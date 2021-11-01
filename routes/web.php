@@ -19,7 +19,7 @@ use App\Models\Category;
 
 Route::get('/', function(){
 	return view('posts.index',[
-		'posts' => Post::latest('published_at')->with('category','author')->get(),
+		'posts' => Post::latest('published_at')->get(),
 	]);
 });
 
