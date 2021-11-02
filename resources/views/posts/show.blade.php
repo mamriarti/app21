@@ -1,4 +1,4 @@
-
+<x-layout>
 	<article>
 		
 		<h1>
@@ -14,3 +14,4 @@
 	<p>
 		<a href="/">Go back</a>
 	</p>
+</x-layout>
