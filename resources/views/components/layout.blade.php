@@ -10,7 +10,7 @@
         <nav class="md:flex md:justify-between md:items-center">
             <div>
                 <a href="/">
-                    <img src="./images/logo.svg" alt="Laracasts Logo" width="165" height="16">
+                    <img src="/images/logo.svg" alt="Laracasts Logo" width="165" height="16">
                 </a>
             </div>
 
@@ -37,7 +37,7 @@
                     <form method="POST" action="#" class="lg:flex text-sm">
                         <div class="lg:py-3 lg:px-5 flex items-center">
                             <label for="email" class="hidden lg:inline-block">
-                                <img src="./images/mailbox-icon.svg" alt="mailbox letter">
+                                <img src="/images/mailbox-icon.svg" alt="mailbox letter">
                             </label>
 
                             <input id="email" type="text" placeholder="Your email address"
