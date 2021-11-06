@@ -34,14 +34,16 @@ Route::get('post/{post:slug}', function (Post $post){
 Route::get('author/{author:username}', function(User $author){
 	return view ('posts.index',[
 		
-		'posts' => $author->posts
+		'posts' => $author->posts,
+		'categories' => Category::all()
 
 	]);
 	});
 
 	Route::get('category/{category:slug}', function(Category $category){
 		return view('posts.index', [
-				'posts' => $category->posts
+				'posts' => $category->posts,
+				'categories' => Category::all()
 			]);
 	});
           
