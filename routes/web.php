@@ -1,10 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
+use Illuminate\Support\Facades\Route;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,27 +19,9 @@ use App\Models\Category;
 |
 */
 
-Route::get('/', function(){
+Route::get('/', [PostController::class, 'index'])->name('home');
 
-	$posts = Post::latest();
-
-	if(request('search')){
-		$posts
-		->where('title', 'like','%' . request('search') . '%')
-		->orWhere('body', 'like', '%' . request('search') . '%'); 
-	}
-	return view('posts.index',[
-		'posts' => $posts->get(),
-		'categories' => Category::all()
-	]);
-});
-
-Route::get('posts/{post:slug}', function (Post $post){
-	return view ('posts.show',[
-		'post' => $post,
-		
-	]);
-	});
+Route::get('posts/{post:slug}',[PostController::class, 'show']);
 
 
 Route::get('author/{author:username}', function(User $author){
