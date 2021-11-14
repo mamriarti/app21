@@ -33,12 +33,12 @@ Route::get('author/{author:username}', function(User $author){
 	]);
 	});
 
-	Route::get('category/{category:slug}', function(Category $category){
-		return view('posts.index', [
-				'posts' => $category->posts,
-				'categories' => Category::all()
-			]);
-	});
+	// Route::get('category/{category:slug}', function(Category $category){
+	// 	return view('posts.index', [
+	// 			'posts' => $category->posts,
+	// 			'categories' => Category::all()
+	// 		]);
+	// });
           
 
 
