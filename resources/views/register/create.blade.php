@@ -9,6 +9,7 @@
         <h1 class="text-center font-bold text-xl"> Регистрация</h1>
 
         <form method="POST" action="/register" class="mt-10">
+            @csrf
 
             <div class="mb-6">
 
