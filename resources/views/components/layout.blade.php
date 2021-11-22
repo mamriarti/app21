@@ -18,11 +18,24 @@ rel="stylesheet">
                 </a>
             </div>
 
-            <div class="mt-8 md:mt-0">
+            <div class="mt-8 md:mt-0 flex items-center">
 
-                @guest
-                <a href="/register" class="text-xs font-bold uppercase">Регистрация</a>
-                @endguest
+                @auth
+
+               <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</span>
+
+                    <form method="POST" action="/logout" class="text-xs font-semibold text-blue-500 ml-6">
+                        @csrf
+
+                        <button type="submit">Выйти</button>
+
+                    </form>
+
+                @else
+                    <a href="/register" class="text-xs font-bold uppercase">Регистрация</a>
+                <p></p>
+                    <a href="/login" class="text-xs font-bold uppercase ml-6">Войти</a>
+                @endauth
 
                 <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
                     Subscribe for Updates
