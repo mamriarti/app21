@@ -20,14 +20,16 @@ class SessionsController extends Controller
            'email' => 'required|email',
            'password' => 'required',
        ]);
-       if(auth()->attempt($attributes)){
+       if(! auth()->attempt($attributes)){
+
+           throw ValidationException::withMessages([
+               'email' => 'Не удалось проверить предоставленные вами учетные данные.'
+           ]);
+       }
            session()->regenerate();
            return redirect('/')->with('success', 'Добро пожаловать на сайт');
 
-       }
-       throw ValidationException::withMessages([
-           'email' => 'Не удалось проверить предоставленные вами учетные данные.'
-       ]);
+
 
    }
 
