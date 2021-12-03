@@ -18,7 +18,14 @@ Route::get('ping', function (){
         'server' => 'us20'
     ]);
 
-    $response = $mailchimp->ping->get();
+   // $response = $mailchimp->lists->getAllLists();
+ //$response = $mailchimp->lists->getListMembersInfo("9399567b36");
+    $response = $mailchimp->lists->addListMember("9399567b36",
+    [
+        "email_address" => "Lindsey.White93@hotmail.com",
+        "status" => "subscribed",
+    ]);
+
     ddd($response);
 
 });
