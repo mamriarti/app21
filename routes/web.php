@@ -9,7 +9,10 @@ use App\Models\User;
 use App\Models\Category;
 
 use Illuminate\Support\Facades\Route;
-Route::get('ping', function (){
+Route::post('newsletter', function (){
+    request()->validate([
+        'email' => 'required|email',
+    ]);
 
     $mailchimp = new \MailchimpMarketing\ApiClient();
 
@@ -20,13 +23,13 @@ Route::get('ping', function (){
 
    // $response = $mailchimp->lists->getAllLists();
  //$response = $mailchimp->lists->getListMembersInfo("9399567b36");
-    $response = $mailchimp->lists->addListMember("9399567b36",
+    $response = $mailchimp->lists->addListMember('9399567b36',
     [
-        "email_address" => "Lindsey.White93@hotmail.com",
-        "status" => "subscribed",
+        'email_address' => request('email'),
+        'status' => 'subscribed',
     ]);
 
-    ddd($response);
+    return redirect('/')->with('success','Вы подписаны на нашу рассылку');
 
 });
 
