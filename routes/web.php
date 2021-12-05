@@ -20,14 +20,22 @@ Route::post('newsletter', function (){
         'apiKey' => config('services.mailchimp.key'),
         'server' => 'us20'
     ]);
+    try {
+        $response = $mailchimp->lists->addListMember('9399567b36',
+            [
+                'email_address' => request('email'),
+                'status' => 'subscribed',
+            ]);
+    } catch (\Exception $e){
 
+       throw \Illuminate\Validation\ValidationException::withMessages([
+            'email' => 'Этот емейл не может быть добавлен в список рассылки'
+         ]);
+
+    }
    // $response = $mailchimp->lists->getAllLists();
  //$response = $mailchimp->lists->getListMembersInfo("9399567b36");
-    $response = $mailchimp->lists->addListMember('9399567b36',
-    [
-        'email_address' => request('email'),
-        'status' => 'subscribed',
-    ]);
+
 
     return redirect('/')->with('success','Вы подписаны на нашу рассылку');
 
