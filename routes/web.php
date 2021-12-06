@@ -4,6 +4,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\PostCommentsController;
+use App\Http\Controllers\NewsletterController;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
@@ -13,35 +14,15 @@ use App\Services\Newsletter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
 
-Route::post('newsletter', function (Newsletter $newsletter){
-    request()->validate([
-        'email' => 'required|email',
-    ]);
-
-
-    try {
-       $newsletter->subscribe(request('email'));
-
-    } catch (Exception $e){
-
-       throw ValidationException::withMessages([
-            'email' => 'Этот емейл не может быть добавлен в список рассылки'
-         ]);
-
-    }
-   // $response = $mailchimp->lists->getAllLists();
- //$response = $mailchimp->lists->getListMembersInfo("9399567b36");
-
-
-    return redirect('/')->with('success','Вы подписаны на нашу рассылку');
-
-});
 
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::get('posts/{post:slug}',[PostController::class, 'show'])->name('show');
 Route::post('posts/{post:slug}/comments',[PostCommentsController::class, 'store']);
+
+Route::post('newsletter', NewsletterController::class);
+
 
 Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
