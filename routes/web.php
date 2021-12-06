@@ -7,28 +7,24 @@ use App\Http\Controllers\PostCommentsController;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
+use App\Services;
 
+use App\Services\Newsletter;
 use Illuminate\Support\Facades\Route;
-Route::post('newsletter', function (){
+use Illuminate\Validation\ValidationException;
+
+Route::post('newsletter', function (Newsletter $newsletter){
     request()->validate([
         'email' => 'required|email',
     ]);
 
-    $mailchimp = new \MailchimpMarketing\ApiClient();
 
-    $mailchimp->setConfig([
-        'apiKey' => config('services.mailchimp.key'),
-        'server' => 'us20'
-    ]);
     try {
-        $response = $mailchimp->lists->addListMember('9399567b36',
-            [
-                'email_address' => request('email'),
-                'status' => 'subscribed',
-            ]);
-    } catch (\Exception $e){
+       $newsletter->subscribe(request('email'));
 
-       throw \Illuminate\Validation\ValidationException::withMessages([
+    } catch (Exception $e){
+
+       throw ValidationException::withMessages([
             'email' => 'Этот емейл не может быть добавлен в список рассылки'
          ]);
 
