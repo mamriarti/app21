@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use http\Env\Response;
 use Illuminate\Http\Request;
 
 class MustBeAdministrator
@@ -17,10 +16,12 @@ class MustBeAdministrator
      */
     public function handle(Request $request, Closure $next)
     {
-    //  abort_if(auth->user()?->username !== 'JeffreyWay', Response::HTTP_FORBIDDEN);
-       abort_if(! Auth::user()->isAdmin(), 403);
-
-
+        if (auth()->guest()){
+            abort(403);
+        }
+        if(auth()->user()->username !== 'AlexAdmin'){
+            abort(403);
+        }
 
         return $next($request);
     }
