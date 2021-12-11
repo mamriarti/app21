@@ -15,6 +15,7 @@
                         type="text"
                         name="title"
                         id="title"
+                        value="{{ old('title') }}"
                         required>
 
                         @error('title')
@@ -34,6 +35,7 @@
                                type="text"
                                name="slug"
                                id="slug"
+                               value="{{ old('slug') }}"
                                required>
 
                         @error('slug')
@@ -53,6 +55,7 @@
                         <textarea class="border border-gray-400 p-2 w-full"
                                name="excerpt"
                                id="excerpt"
+                               value="{{ old('excerpt') }}"
                                   required></textarea>
 
                         @error('excerpt')
@@ -65,14 +68,16 @@
 
                     <div class="mb-6">
                         <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                               for="title">
+                               for="body">
                             Body
                         </label>
 
                         <textarea class="border border-gray-400 p-2 w-full"
                                name="body"
                                id="body"
-                                  required></textarea>
+                                  required>
+                            {{ old('body') }}
+                        </textarea>
 
 
                         @error('body')
@@ -99,7 +104,9 @@
 
                                 @foreach($categories as $category)
 
-                                    <option value="{{ $category->id }}">
+                                    <option value="{{ $category->id }}"
+                                        {{ old('category_id') == $category->id ? 'selected' : '' }}
+                                    >
                                         {{ ucwords($category->name) }}
                                     </option>
 
