@@ -10,7 +10,7 @@
                      class="rounded-xl">
             @else
                 <img src="{{ asset('/storage/' . $post->thumbnail )}}"
-                     alt="{{ $post->title }}"
+                     alt="{{ $post->alt }}"
                      class="rounded-xl">
             @endif
         </div>

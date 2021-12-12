@@ -7,11 +7,11 @@
                 <div class="col-span-4 lg:text-center lg:pt-14 mb-10">
                     @if($post->thumbnail == null)
                     <img src="/images/illustration-1.png"
-                         alt=""
+                         alt="{{ $post->title }}"
                          class="rounded-xl">
                     @else
                         <img src="{{ asset('/storage/' . $post->thumbnail )}}"
-                             alt="{{ $post->title }}"
+                             alt="{{ $post->alt }}"
                              class="rounded-xl">
                     @endif
 
