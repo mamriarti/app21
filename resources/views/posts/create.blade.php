@@ -8,77 +8,21 @@
                 <form method="POST" action="/admin/posts" enctype="multipart/form-data">
                     @csrf
 
-                 <x-form.input name="title" />
+                 <x-form.input name="title" postname="title" />
 
 
-                    <x-form.input name="slug"/>
+                    <x-form.input name="slug" postname="slug" />
 
-                    <x-form.input name="thumbnail" type="file" />
-
-
-
-                    <div class="mb-6">
-                        <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                               for="alt">
-                            Описание добавляемой картинки
-                        </label>
-
-                        <input class="border border-gray-400 p-2 w-full"
-                               type="text"
-                               name="alt"
-                               id="alt"
-                               value="{{ old('alt') }}"
-                               required>
-
-                        @error('alt')
-                        <p class="text-red-500 text-xs mt-2">
-                            {{ $message }}
-                        </p>
-                        @enderror
-
-                    </div>
-
-                    <div class="mb-6">
-                        <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                               for="title">
-                            Excerpt
-                        </label>
-
-                        <textarea class="border border-gray-400 p-2 w-full"
-                               name="excerpt"
-                               id="excerpt"
-                               value="{{ old('excerpt') }}"
-                                  required></textarea>
-
-                        @error('excerpt')
-                        <p class="text-red-500 text-xs mt-2">
-                            {{ $message }}
-                        </p>
-                        @enderror
-
-                    </div>
-
-                    <div class="mb-6">
-                        <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                               for="body">
-                            Body
-                        </label>
-
-                        <textarea class="border border-gray-400 p-2 w-full"
-                               name="body"
-                               id="body"
-                                  required>
-                            {{ old('body') }}
-                        </textarea>
+                    <x-form.input name="thumbnail" type="file" postname="thumbnail" />
 
 
-                        @error('body')
-                        <p class="text-red-500 text-xs mt-2">
-                            {{ $message }}
-                        </p>
-                        @enderror
+                    <x-form.input name="alt" postname="Описание добавляемой картинки"/>
 
-                    </div>
+
+                   <x-form.textarea name="excerpt" />
+                    <x-form.textarea name="body" />
+
+
 
 
                     <div class="mb-6">

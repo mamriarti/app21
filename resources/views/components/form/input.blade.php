@@ -1,9 +1,9 @@
-@props(['name', 'type' => 'text'])
+@props(['name', 'type' => 'text', 'postname' => ''])
 
     <div class="mb-6">
         <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
                for="{{ $name }}">
-            {{ ucwords($name) }}
+            {{ ucwords($postname) }}
         </label>
 
         <input class="border border-gray-400 p-2 w-full"
