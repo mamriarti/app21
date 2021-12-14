@@ -1,21 +1,15 @@
-@props(['name'])
+@props(['name', 'fieldname' => '' ])
 
-        <div class="mb-6">
-            <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                   for="{{ $name }}">
-                {{ ucwords($name) }}
-            </label>
+  <x-form.field>
+
+            <x-form.label name="{{ $name }}" fieldname="{{ $fieldname }}" />
 
             <textarea class="border border-gray-400 p-2 w-full"
                       name="{ $name }}"
                       id="{ $name }}"
                       value="{{ old($name) }}"
-                      required></textarea>
+                     ></textarea>
 
-            @error('$name')
-            <p class="text-red-500 text-xs mt-2">
-                {{ $message }}
-            </p>
-            @enderror
+      <x-form.error name="{{ $name }}"/>
 
-        </div>
+  </x-form.field>

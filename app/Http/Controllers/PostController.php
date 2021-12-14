@@ -38,7 +38,7 @@ class PostController extends Controller
             'title' => 'required|min:3|max:300',
             'thumbnail' => 'required|image',
             'alt' => 'required|min:3|max:300',
-            'slug' => ['required', Rule::unique('posts', 'slug')],
+            'slug' => ['required', 'min:3', 'max:300', Rule::unique('posts', 'slug')],
             'excerpt' => 'required|min:3|max:300',
             'body' => 'required|min:3|max:800',
             'category_id' => ['required', Rule::exists('categories', 'id')],
