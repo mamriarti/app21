@@ -26,14 +26,39 @@ rel="stylesheet">
 
                 @auth
 
-               <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}</span>
+                    <x-dropdown>
+                        <x-slot name="trigger">
 
-                    <form method="POST" action="/logout" class="text-xs font-semibold text-blue-500 ml-6">
-                        @csrf
+                                <button
+                                    class="text-xs font-bold uppercase">
+                                    Welcome, {{ auth()->user()->name }}
+                                </button>
+                        </x-slot>
+                                    <x-dropdown-item href="/admin/posts/dashboard">
 
-                        <button type="submit">Выйти</button>
+                                        Dashboard
 
-                    </form>
+                                    </x-dropdown-item>
+
+                                    <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">
+
+                                        New Post
+
+                                    </x-dropdown-item>
+
+
+
+
+
+                    </x-dropdown>
+
+
+                        <form method="POST" action="/logout" class="text-xs font-semibold text-blue-500 ml-6">
+                            @csrf
+
+                            <button type="submit">Выйти</button>
+
+                        </form>
 
                 @else
                     <a href="/register" class="text-xs font-bold uppercase">Регистрация</a>
