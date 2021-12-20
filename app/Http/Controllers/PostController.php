@@ -26,28 +26,8 @@ class PostController extends Controller
         ]);
     }
 
-    public function create()
-    {
 
-        return view('admin.posts.create');
-    }
 
-    public function store()
-    {
-        $attributes = request()->validate([
-            'title' => 'required|min:3|max:300',
-            'thumbnail' => 'required|image',
-            'alt' => 'required|min:3|max:300',
-            'slug' => ['required', 'min:3', 'max:300', Rule::unique('posts', 'slug')],
-            'excerpt' => 'required|min:3|max:300',
-            'body' => 'required|min:3|max:800',
-            'category_id' => ['required', Rule::exists('categories', 'id')],
-        ]);
 
-        $attributes['user_id'] = auth()->id();
-        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnail');
-        Post::create($attributes);
-        return redirect('/');
-    }
 
 }
