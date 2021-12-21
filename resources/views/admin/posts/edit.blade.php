@@ -2,8 +2,9 @@
 
 
     <x-setting :heading="'Изменить Статью: '. $post->title">
-        <form method="POST" action="/admin/posts" enctype="multipart/form-data">
+        <form method="POST" action="/admin/posts/{{ $post->id }}" enctype="multipart/form-data">
             @csrf
+            @method('PATCH')
 
             <x-form.input name="title" postname="title" fieldname="Название статьи" :value="old('title', $post->title)" required/>
 
