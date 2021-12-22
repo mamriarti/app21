@@ -29,13 +29,13 @@ class AdminPostController extends Controller
             'thumbnail' => 'required|image',
             'alt' => 'required|min:3|max:300',
             'slug' => ['required', 'min:3', 'max:300', Rule::unique('posts', 'slug')],
-            'excerpt' => 'required|min:3|max:300',
-            'body' => 'required|min:3|max:800',
+            'excerpt' => 'required|min:3|max:800',
+            'body' => 'required|min:3|max:1600',
             'category_id' => ['required', Rule::exists('categories', 'id')],
         ]);
 
         $attributes['user_id'] = auth()->id();
-        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnail');
+        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
         Post::create($attributes);
         return redirect('/');
     }
@@ -51,8 +51,8 @@ class AdminPostController extends Controller
             'thumbnail' => 'image',
             'alt' => 'required|min:3|max:300',
             'slug' => ['required', 'min:3', 'max:300', Rule::unique('posts', 'slug')->ignore($post->id)],
-            'excerpt' => 'required|min:3|max:300',
-            'body' => 'required|min:3|max:800',
+            'excerpt' => 'required|min:3|max:800',
+            'body' => 'required|min:3|max:1600',
             'category_id' => ['required', Rule::exists('categories', 'id')],
         ]);
 
@@ -63,5 +63,12 @@ class AdminPostController extends Controller
 
         $post->update($attributes);
         return back()->with('success', 'Статья Отредактирована!');
+    }
+
+    public function destroy(Post $post){
+
+        $post->delete();
+
+        return back()->with('success', 'Статья Удалена!');
     }
 }
