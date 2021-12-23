@@ -3,72 +3,68 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class AdminPostController extends Controller
 {
-    public function index(){
-        return view('admin.posts.index',[
-            'posts' =>
-                Post::paginate(50)
+    public function index()
+    {
+        return view('admin.posts.index', [
+            'posts' => Post::paginate(50)
         ]);
-
     }
-
 
     public function create()
     {
-
         return view('admin.posts.create');
     }
+
     public function store()
     {
-        $attributes = request()->validate([
-            'title' => 'required|min:3|max:300',
-            'thumbnail' => 'required|image',
-            'alt' => 'required|min:3|max:300',
-            'slug' => ['required', 'min:3', 'max:300', Rule::unique('posts', 'slug')],
-            'excerpt' => 'required|min:3|max:800',
-            'body' => 'required|min:3|max:1600',
-            'category_id' => ['required', Rule::exists('categories', 'id')],
-        ]);
+        Post::create(array_merge($this->validatePost(), [
+            'user_id' => request()->user()->id,
+            'thumbnail' => request()->file('thumbnail')->store('thumbnails')
+        ]));
 
-        $attributes['user_id'] = auth()->id();
-        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
-        Post::create($attributes);
         return redirect('/');
     }
 
-    public function edit(Post $post){
-
-        return view('admin.posts.edit', ['post' => $post ]);
+    public function edit(Post $post)
+    {
+        return view('admin.posts.edit', ['post' => $post]);
     }
 
-    public function update(Post $post){
-        $attributes = request()->validate([
-            'title' => 'required|min:3|max:300',
-            'thumbnail' => 'image',
-            'alt' => 'required|min:3|max:300',
-            'slug' => ['required', 'min:3', 'max:300', Rule::unique('posts', 'slug')->ignore($post->id)],
-            'excerpt' => 'required|min:3|max:800',
-            'body' => 'required|min:3|max:1600',
-            'category_id' => ['required', Rule::exists('categories', 'id')],
-        ]);
+    public function update(Post $post)
+    {
+        $attributes = $this->validatePost($post);
 
-        if (isset($attributes['thumbnail'])){
+        if ($attributes['thumbnail'] ?? false) {
             $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
         }
 
-
         $post->update($attributes);
-        return back()->with('success', 'Статья Отредактирована!');
+
+        return back()->with('success', 'Post Updated!');
     }
 
-    public function destroy(Post $post){
-
+    public function destroy(Post $post)
+    {
         $post->delete();
 
-        return back()->with('success', 'Статья Удалена!');
+        return back()->with('success', 'Post Deleted!');
+    }
+
+    protected function validatePost(?Post $post = null): array
+    {
+        $post ??= new Post();
+
+        return request()->validate([
+            'title' => 'required',
+            'thumbnail' => $post->exists ? ['image'] : ['required', 'image'],
+            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post)],
+            'excerpt' => 'required',
+            'body' => 'required',
+            'category_id' => ['required', Rule::exists('categories', 'id')]
+        ]);
     }
 }
