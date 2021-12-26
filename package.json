@@ -14,5 +14,9 @@
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14"
+    },
+    "dependencies": {
+        "@prettier/plugin-php": "^0.17.6",
+        "prettier": "^2.5.1"
     }
 }
